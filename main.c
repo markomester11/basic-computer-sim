@@ -99,7 +99,7 @@ void sabirac(int a[] , int b[] , int *p ,  int n){
     }
     for(int i = n-1; i >= 0 ; i--){
          a[i] = (c[i] ^ b[i]) ^ q;
-         q = (c[i] & b[i]) | (c[i] ^ b[i]) & q ;
+         q = (c[i] & b[i]) | ((c[i] ^ b[i]) & q);
     }
     *p = q;
 }
@@ -599,7 +599,7 @@ void loadFromFile(char* fileName) {
         char* instrukcija = strtok(NULL, razmak);
 
         char* adrS = strtok(NULL, razmak);
-        int adr = atoi(adrS);
+        int adr = adrS ? atoi(adrS) : 0; // register-reference instructions (e.g. HLT) have no operand
         if(instrukcija[3] == '*') {
             RAM[adrInstr][0] = 1;
         }
